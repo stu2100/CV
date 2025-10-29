@@ -1,2 +1,2 @@
 # CV
-My HTML CV for cloud development challenge 
+My HTML CV for the 'Cloud Resume Challenge' 
