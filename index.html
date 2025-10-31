@@ -6,6 +6,25 @@
   <title>Stuart Herriott - Cloud Resume</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Simple floating visitor ticker */
+    .visitor-ticker {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .visitor-ticker span:first-child {
+      margin-right: 0.5rem;
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -42,23 +61,23 @@
       <h2>Education</h2>
       <ul>
         <li>Currently studying BSc in Digital and Technology Solutions – Blackpool & Fylde College, accredited by Lancaster University.</li>
-        <li>Bsc Physiotherapy (2.1) - Cardiff University (2017-2020) </li>
+        <li>BSc Physiotherapy (2.1) - Cardiff University (2017-2020)</li>
       </ul>
     </section>
 
     <section class="card">
       <h2>About Me</h2>
       <p>
-        I trained and worked as a Senior Physiotherapist in the NHS and private sector before deciding on a career change to the IT industry. When I'm not working or spending time with my wife and daughter, I can be found playing tennis, padel, surfing or in the gym.
+        I trained and worked as a Senior Physiotherapist in the NHS and private sector before deciding on a career change to the IT industry. When I'm not working or spending time with my wife and daughter, I can be found playing tennis, padel, surfing, or in the gym.
       </p>
     </section>
-
-    <!-- 🧮 Visitor Counter -->
-    <section class="card">
-      <h2>Visitor Counter</h2>
-      <p>Visitors: <span id="visitor-count">Loading...</span></p>
-    </section>
   </main>
+
+  <!-- 🧮 Visitor Counter Ticker -->
+  <div class="visitor-ticker">
+    <span>Visitors:</span>
+    <span id="visitor-count">Loading...</span>
+  </div>
 
   <footer class="site-footer">
     <p>© 2025 Stuart Herriott — Cloud Resume Challenge</p>
