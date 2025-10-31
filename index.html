@@ -84,23 +84,37 @@
   </footer>
 
   <!-- 📜 Visitor Counter Script -->
-  <script>
-    const counterElement = document.getElementById("visitor-count");
+<script>
+  const counterElement = document.getElementById("visitor-count");
 
-    // Replace this with your actual Cloud Function URL
-    const functionURL = "https://europe-west1-vast-arena-218918.cloudfunctions.net/visit-count";
+  // Replace this with your actual Cloud Function URL
+  const functionURL = "https://europe-west1-vast-arena-218918.cloudfunctions.net/visit-count";
 
-    // Fetch visitor count from the Cloud Function
-    fetch(functionURL, { mode: "cors" })
-      .then(response => response.text())
-      .then(data => {
-        const count = data.match(/\d+/)?.[0] || "N/A";
-        counterElement.textContent = count;
-      })
-      .catch(error => {
-        console.error("Error fetching visitor count:", error);
-        counterElement.textContent = "Error";
-      });
-  </script>
+  // Fetch visitor count from the Cloud Function
+  fetch(functionURL, { mode: "cors" })
+    .then(response => {
+      // 1. Check for a successful HTTP status (e.g., 200 OK)
+      if (!response.ok) {
+        // If the status is an error (e.g., 404, 500), throw an error
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      // 2. Read the response body as plain text
+      return response.text(); 
+    })
+    .then(data => {
+      // 3. ASSUMPTION: The Cloud Function returns ONLY the number as a string (e.g., "123")
+      // We still use a regex to ensure only digits are displayed, just in case
+      const countMatch = data.trim().match(/^\d+$/); // Look for a string that is ONLY digits
+      const count = countMatch ? countMatch[0] : "N/A";
+      
+      counterElement.textContent = count;
+    })
+    .catch(error => {
+      // This catches any network error, HTTP status error (from step 1), 
+      // or parsing error.
+      console.error("Error fetching visitor count:", error);
+      counterElement.textContent = "Error"; // ⬅️ This is the text you were seeing
+    });
+</script>
 </body>
 </html>
