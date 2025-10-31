@@ -52,10 +52,36 @@
         I trained and worked as a Senior Physiotherapist in the NHS and private sector before deciding on a career change to the IT industry. When I'm not working or spending time with my wife and daughter, I can be found playing tennis, padel, surfing or in the gym.
       </p>
     </section>
+
+    <!-- 🧮 Visitor Counter -->
+    <section class="card">
+      <h2>Visitor Counter</h2>
+      <p>Visitors: <span id="visitor-count">Loading...</span></p>
+    </section>
   </main>
 
   <footer class="site-footer">
     <p>© 2025 Stuart Herriott — Cloud Resume Challenge</p>
   </footer>
+
+  <!-- 📜 Visitor Counter Script -->
+  <script>
+    const counterElement = document.getElementById("visitor-count");
+
+    // Replace this with your actual Cloud Function URL
+    const functionURL = "https://europe-west1-vast-arena-218918.cloudfunctions.net/visit-count";
+
+    // Fetch visitor count from the Cloud Function
+    fetch(functionURL, { mode: "cors" })
+      .then(response => response.text())
+      .then(data => {
+        const count = data.match(/\d+/)?.[0] || "N/A";
+        counterElement.textContent = count;
+      })
+      .catch(error => {
+        console.error("Error fetching visitor count:", error);
+        counterElement.textContent = "Error";
+      });
+  </script>
 </body>
 </html>
