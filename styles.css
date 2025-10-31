@@ -98,3 +98,21 @@ footer.site-footer {
   padding: 2rem 0;
   font-size: 0.9rem;
 }
+
+/* Visitor Counter Ticker */
+.visitor-ticker {
+  position: fixed;       /* stays in place when scrolling */
+  bottom: 20px;          /* distance from bottom */
+  right: 20px;           /* distance from right */
+  background: var(--accent);
+  color: white;
+  padding: 0.6rem 1rem;
+  border-radius: 50px;   /* makes it pill-shaped */
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: var(--shadow);
+  z-index: 1000;         /* make sure it's on top */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
