@@ -5,78 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stuart Herriott - Cloud Resume</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* Simple floating visitor ticker */
-    .visitor-ticker {
-      position: fixed;
-      bottom: 1rem;
-      right: 1rem;
-      background-color: rgba(0, 0, 0, 0.7);
-      color: #fff;
-      padding: 0.5rem 1rem;
-      border-radius: 1rem;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-    .visitor-ticker span:first-child {
-      margin-right: 0.5rem;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <div class="brand">
-        <div class="logo">SH</div>
-        <div>
-          <h1>Stuart Herriott</h1>
-          <p class="subtitle">Pre-Sales Solution Architect | Vodafone Business</p>
-        </div>
+  <div class="page">
+    <aside class="profile">
+      <div class="initials">SH</div>
+      <div class="profile-text">
+        <p class="eyebrow">Cloud Resume Challenge</p>
+        <h1>Stuart Herriott</h1>
+        <p class="title">Network Engineer Apprentice</p>
+        <p class="subtitle">Vodafone Business</p>
       </div>
-    </div>
-  </header>
+    </aside>
 
-  <main class="container">
-    <section class="card">
-      <h2>Experience</h2>
-      <ul>
-        <li>
-          <strong>Solution Architect:</strong> Pre-Sales for Vodafone Business Technology Solutions. Lead architect for Vodafone Luxembourg EU Logistics Hub using Juniper Mist for SD-LAN. Supporting LAN and WAN requests for solutions on business accounts.
-        </li>
-      </ul>
-    </section>
+    <main class="content">
+      <section class="intro card">
+        <p class="lede">Network specialist with a talent for translating complex customer requirements into scalable, reliable solutions. Currently supporting pre-sales architecture for Vodafone Business Technology Solutions.</p>
+        <p class="visitor-inline">Visitor #<span id="visitor-count">loading</span>.</p>
+      </section>
 
-    <section class="card">
-      <h2>Professional Certifications</h2>
-      <ul>
-        <li>CCNA: 200-301</li>
-        <li>Google Associate Cloud Engineer (ACE)</li>
-      </ul>
-    </section>
+      <section class="card" id="experience">
+        <h2>Experience</h2>
+        <div class="entry">
+          <div class="entry-heading">
+            <h3>Solution Architect</h3>
+            <span class="meta">Vodafone Business Technology Solutions · Present</span>
+          </div>
+          <p>Lead architect for Vodafone Luxembourg EU Logistics Hub using Juniper Mist for SD-LAN. Support LAN and WAN requests for enterprise solutions across key business accounts.</p>
+        </div>
+      </section>
 
-    <section class="card">
-      <h2>Education</h2>
-      <ul>
-        <li>Currently studying BSc in Digital and Technology Solutions – Blackpool & Fylde College, accredited by Lancaster University.</li>
-        <li>BSc Physiotherapy (2.1) - Cardiff University (2017-2020)</li>
-      </ul>
-    </section>
+      <section class="card" id="certifications">
+        <h2>Professional Certifications</h2>
+        <ul>
+          <li>CCNA: 200-301</li>
+          <li>Google Associate Cloud Engineer (ACE)</li>
+        </ul>
+      </section>
 
-    <section class="card">
-      <h2>About Me</h2>
-      <p>
-        I trained and worked as a Senior Physiotherapist in the NHS and private sector before deciding on a career change to the IT industry. When I'm not working or spending time with my wife and daughter, I can be found playing tennis, padel, surfing, or in the gym.
-      </p>
-    </section>
-  </main>
+      <section class="card" id="education">
+        <h2>Education</h2>
+        <ul>
+          <li>Currently studying BSc in Digital and Technology Solutions – Blackpool & Fylde College, accredited by Lancaster University.</li>
+          <li>BSc Physiotherapy (2.1) - Cardiff University (2017-2020)</li>
+        </ul>
+      </section>
 
-  <!-- 🧮 Visitor Counter Ticker -->
-  <div class="visitor-ticker">
-    <span>Visitors:</span>
-    <span id="visitor-count">Loading...</span>
+      <section class="card" id="about">
+        <h2>About Me</h2>
+        <p>I trained and worked as a Senior Physiotherapist in the NHS and private sector before deciding on a career change to the IT industry. When I'm not working or spending time with my wife and daughter, I can be found playing tennis, padel, surfing, or in the gym.</p>
+      </section>
+    </main>
   </div>
 
   <footer class="site-footer">
@@ -84,37 +64,35 @@
   </footer>
 
   <!-- 📜 Visitor Counter Script -->
-<script>
-  const counterElement = document.getElementById("visitor-count");
+  <script>
+    const counterElement = document.getElementById("visitor-count");
+    const visitorLine = document.querySelector(".visitor-inline");
+    const functionURL = "https://europe-west1-vast-arena-218918.cloudfunctions.net/visit-count";
 
-  // Replace this with your actual Cloud Function URL
-  const functionURL = "https://europe-west1-vast-arena-218918.cloudfunctions.net/visit-count";
+    async function loadVisitorCount() {
+      try {
+        const response = await fetch(functionURL, { mode: "cors" });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
 
-  // Fetch visitor count from the Cloud Function
-  fetch(functionURL, { mode: "cors" })
-    .then(response => {
-      // 1. Check for a successful HTTP status (e.g., 200 OK)
-      if (!response.ok) {
-        // If the status is an error (e.g., 404, 500), throw an error
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        const text = await response.text();
+        const countMatch = text.trim().match(/^\d+$/);
+        if (countMatch) {
+          counterElement.textContent = countMatch[0];
+        } else {
+          throw new Error("Unexpected response format");
+        }
+      } catch (error) {
+        console.error("Error fetching visitor count:", error);
+        counterElement.textContent = "unavailable";
+        if (visitorLine) {
+          visitorLine.textContent = "Visitor count is temporarily unavailable.";
+        }
       }
-      // 2. Read the response body as plain text
-      return response.text(); 
-    })
-    .then(data => {
-      // 3. ASSUMPTION: The Cloud Function returns ONLY the number as a string (e.g., "123")
-      // We still use a regex to ensure only digits are displayed, just in case
-      const countMatch = data.trim().match(/^\d+$/); // Look for a string that is ONLY digits
-      const count = countMatch ? countMatch[0] : "N/A";
-      
-      counterElement.textContent = count;
-    })
-    .catch(error => {
-      // This catches any network error, HTTP status error (from step 1), 
-      // or parsing error.
-      console.error("Error fetching visitor count:", error);
-      counterElement.textContent = "Error"; // ⬅️ This is the text you were seeing
-    });
-</script>
+    }
+
+    loadVisitorCount();
+  </script>
 </body>
 </html>
