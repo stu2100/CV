@@ -16,6 +16,13 @@
         <h1>Stuart Herriott</h1>
         <p class="title">Network Engineer Apprentice</p>
         <p class="subtitle">Vodafone Business</p>
+        <p class="title">Pre-Sales Solution Architect</p>
+        <p class="subtitle">Vodafone Business</p>
+        <div class="contact">
+          <a href="mailto:stuart@example.com">Email</a>
+          <span>•</span>
+          <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a>
+        </div>
       </div>
     </aside>
 
@@ -23,6 +30,8 @@
       <section class="intro card">
         <p class="lede">Network specialist with a talent for translating complex customer requirements into scalable, reliable solutions. Currently supporting pre-sales architecture for Vodafone Business Technology Solutions.</p>
         <p class="visitor-inline">Visitor #<span id="visitor-count">loading</span>.</p>
+        <p class="lede">Network specialist with a talent for translating complex customer requirements into scalable, reliable solutions. Currently leading pre-sales architecture for Vodafone Business Technology Solutions.</p>
+        <p class="visitor-inline">You’re visitor <span id="visitor-count">loading</span> — thanks for stopping by.</p>
       </section>
 
       <section class="card" id="experience">
@@ -88,6 +97,9 @@
         counterElement.textContent = "unavailable";
         if (visitorLine) {
           visitorLine.textContent = "Visitor count is temporarily unavailable.";
+        counterElement.textContent = "the latest";
+        if (visitorLine) {
+          visitorLine.textContent = "Thanks for visiting — you’re the latest visitor.";
         }
       }
     }
